@@ -1,37 +1,12 @@
-sudo: true
-language: generic
-dist: bionic
+language: android
+dist: trusty
   
- addons:
-   apt:
-   packages:
-      - bridge-utils
-      - libpulse0
-      - libvirt-bin
-      - qemu-kvm
-      - virtinst
-      - ubuntu-vm-builder
-      
-env:
-   global:
-      - ABI=x86_64
-      - API=29
-      - ADB_INSTALL_TIMEOUT=8
-      - ANDROID_HOME=${HOME}/android-sdk
-      - ANDROID_TOOLS_URL="https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip"
-      - EMU_FLAVOR=default # use google_apis flavor if no default flavor emulator
-      - GRAVIS="https://raw.githubusercontent.com/DanySK/Gravis-CI/master/"
-      - JDK="1.8"
-      - TOOLS=${ANDROID_HOME}/tools
-      - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
+  sudo: required
   
 services:
   - docker
 
 before_script:
-  - sudo adduser $USER libvirt
-  - sudo adduser $USER kvm
-  
   - docker login -u $CI_USER_NAME -p $CI_PASSWORD
   - docker build -t javavirys/androidsdk:v1 .
   - docker push javavirys/androidsdk:v1
