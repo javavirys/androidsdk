@@ -1,0 +1,12 @@
+language: java
+jdk:
+  - openjdk11
+  
+services:
+  - docker
+
+before_script:
+  - docker login -u $CI_USER_NAME -p $CI_PASSWORD
+  - docker build -t javavirys/androidsdk:v1 .
+  - docker push javavirys/androidsdk:v1
+  - docker logout
