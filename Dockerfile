@@ -35,13 +35,13 @@ RUN mkdir "$ANDROID_HOME" .android \
     && yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
 
 # Install Android Build Tool and Libraries
-RUN $ANDROID_HOME/tools/bin/sdkmanager --update
+RUN $ANDROID_HOME/tools/bin/sdkmanager --update | grep -v = || true
 RUN $ANDROID_HOME/tools/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" \
     "platforms;android-${ANDROID_VERSION}" \
-    "platform-tools"
+    "platform-tools" | grep -v = || true
 
-RUN $ANDROID_HOME/tools/bin/sdkmanager emulator
-RUN $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-29;google_apis;x86"
+RUN $ANDROID_HOME/tools/bin/sdkmanager emulator | grep -v = || true
+RUN $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-29;google_apis;x86" | grep -v = || true
 
 RUN yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
 
