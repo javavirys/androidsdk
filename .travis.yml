@@ -1,6 +1,5 @@
-language: java
-jdk:
-  - openjdk11
+language: android
+dist: trusty
   
 services:
   - docker
